@@ -11,7 +11,7 @@ class CreateCrimes < ActiveRecord::Migration
     	t.float :latitude
     	t.float :longitude
 
-      	t.timestamps
+      t.timestamps
     end
   end
 end
