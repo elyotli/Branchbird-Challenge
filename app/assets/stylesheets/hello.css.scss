@@ -1,0 +1,75 @@
+html, body{
+	margin:0;
+	padding:0;
+}
+
+.main{
+	margin-left: auto;
+	margin-right: auto;
+	width:70%
+}
+
+.header{
+	height: 2em;
+	padding-left:15%;
+	background-color:black;
+	color: white;
+}
+
+.header h2{
+	margin:0;
+}
+
+.title{
+	text-align: center;
+}
+
+.graph1{
+	margin-left: auto;
+	margin-right: auto;
+	width:70%
+}
+
+.graph1 .line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+	stroke-width: 2;
+}
+
+.graph2{
+	margin-left: auto;
+	margin-right: auto;
+	width:70%
+}
+
+.graph2 .line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+	stroke-width: 2;
+}
+
+.graph3{
+	margin-left: auto;
+	margin-right: auto;
+	width:70%
+}
+
+.graph3 .line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+	stroke-width: 2;
+}
+
+.buttons{
+	margin-left: auto;
+	margin-right: auto;
+	width:70%
+}
+
+.buttons * {
+	margin-left: 18%;
+
+}
