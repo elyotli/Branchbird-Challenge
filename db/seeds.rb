@@ -12,10 +12,6 @@
 
 require 'csv'
 
-def check_data_nil(data)
-	data['ID'].nil? | data['Date'].nil? | data['Primary Type'].nil? | data['Arrest'].nil? | data['Domestic'].nil? | data['District'].nil?| data['Ward'].nil?| data['Latitude'].nil?| data['Longitude'].nil?
-end
-
 def import_crimes
 	#total lines in crimes file: 4589119
 	missed_data = 0
@@ -59,24 +55,32 @@ def import_permits
 	puts missed_data.to_s + " records were not imported"
 end
 
+def import_zip_coordinates
+	#source: http://www.boutell.com/zipcodes/
+	CSV.foreach(File.dirname(__FILE__)+'/zipcode.csv', :headers => true) do |row|
+		index = $.
+		puts "reading line #{index}"
+		if row['state'] == "IL" && row['city'] == "Chicago" && row['latitude'].nil? == false
+			insert_command = "INSERT INTO zip_coordinates (zip, latitude, longitude)" + 
+				" VALUES (\'#{row['zip']}\', #{row['latitude']}, #{row['longitude']});"
+			ActiveRecord::Base.connection.execute(insert_command)
+		end
+	end
+end
+
+def populate_permit_zip
+	counter = 0
+	Permit.all.each do |p|
+		if p.permit_type == "PERMIT - NEW CONSTRUCTION"
+			#13421 new construction permits total
+			p.populate_zip
+			counter +=1
+			puts counter
+		end
+	end
+end
+
 # import_crimes
 # import_permits
-
-#what the fuck do i do next
-
-# filter down those fucking records
-	# - permits: only take new construction and renovation
-		# hook up to google maps to get zips
-	# - 
-
-
-#crimes, filter down only on a specific ward?
-# get types of crimes
-	# make buckets?
-# get total number of crimes by year
-# get total number of 
-
-
-# make front-end
-
-#
+# import_zip_coordinates
+# populate_permit_zip
