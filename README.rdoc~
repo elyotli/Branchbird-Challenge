@@ -2,8 +2,6 @@ Branchbird Code Challenge - Vince Li
 
 This is Vince's code challenge examining the effect of gentrification on Chicago crime rate.
 
-Production url: https://sleepy-stream-4125.herokuapp.com/
-
 Challenges
 
 The data processing in this assignment really surprised me. Even though DevBootcamp trained me in web development, when it comes to analyzing data, I still very much think in Excel like a management consultant. Not being able to easily save the result of every query into spreadsheets was a big pain and cost me a lot of valuable time.
