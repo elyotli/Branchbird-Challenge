@@ -1,46 +1,3 @@
-function updateGraph(canvas, data){
-	values = [];
-	for(var i = 0; i < data.length; i++){
-		values.push(data[i].value);
-	}
-	var yMax = Math.max.apply(Math, values)
-	var yScale = d3.scale.linear()
-				.domain([0, yMax])
-				.range([graphHeight, 0]);
-
-	var color = d3.scale.category10();
-	// Define the line
-	var line1 = d3.svg.line()
-	    .x(function(d) { return xScale(d.year); })
-	    .y(function(d) { return yScale(d.value); });
-
-    canvas.append("path")
-        .attr("class", "line")
-        .style("stroke", "blue")
-        .attr("d", line1(data)); 
-
-    // Define the axes
-	var xAxis = d3.svg.axis().scale(xScale)
-	    .orient("bottom").ticks(years.length)
-	    .tickFormat(function(d, i){
-		    return d;
-		});
-	var yAxis = d3.svg.axis().scale(yScale)
-	    .orient("left").ticks(5);
-    
-	// Add the X Axis
-    canvas.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", "translate(0," + graphHeight + ")")
-        .call(xAxis);
-    // Add the Y Axis
-    var $canvas = $(canvas[0]);
-    if($canvas.find(".y-axis").length == 0){
-	    canvas.append("g")
-	        .attr("class", "y-axis")
-	        .call(yAxis);
-	}
-}
 
 $(document).ready(function(){
 	//define canvas size, a bunch of globals, should change to closure
@@ -133,6 +90,50 @@ $(document).ready(function(){
 	});
 });	
 
+function updateGraph(canvas, data){
+	values = [];
+	for(var i = 0; i < data.length; i++){
+		values.push(data[i].value);
+	}
+	var yMax = Math.max.apply(Math, values)
+	var yScale = d3.scale.linear()
+				.domain([0, yMax])
+				.range([graphHeight, 0]);
+
+	var color = d3.scale.category10();
+	// Define the line
+	var line1 = d3.svg.line()
+	    .x(function(d) { return xScale(d.year); })
+	    .y(function(d) { return yScale(d.value); });
+
+    canvas.append("path")
+        .attr("class", "line")
+        .style("stroke", "blue")
+        .attr("d", line1(data)); 
+
+    // Define the axes
+	var xAxis = d3.svg.axis().scale(xScale)
+	    .orient("bottom").ticks(years.length)
+	    .tickFormat(function(d, i){
+		    return d;
+		});
+	var yAxis = d3.svg.axis().scale(yScale)
+	    .orient("left").ticks(5);
+    
+	// Add the X Axis
+    canvas.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", "translate(0," + graphHeight + ")")
+        .call(xAxis);
+    // Add the Y Axis
+    var $canvas = $(canvas[0]);
+    if($canvas.find(".y-axis").length == 0){
+	    canvas.append("g")
+	        .attr("class", "y-axis")
+	        .call(yAxis);
+	}
+}
+
 function updateDistributionGraph(canvas, data){
 	canvas.attr("height", 600);
 	$(canvas[0]).empty();
@@ -192,75 +193,3 @@ function updateDistributionGraph(canvas, data){
 	        .call(yAxis);
 	}
 }
-
-
-	// processing data
-	// var chicago_crime_data = [];
-	// for(var i = 0; i < years.length; i++){
-	// 	chicago_crime_data.push({year: years[i], value: chicago_total_crime[i],symbol: "chicago"})
-	// }
-
-	// var chicago_permit_data = [];
-	// for(var i = 0; i < years.length; i++){
-	// 	chicago_permit_data.push({year: years[i], value: chicago_permits[i],symbol: "chicago"})
-	// }
-
-	// updateGraph(canvas3, chicago_crime_data)
-	// updateGraph(canvas3, chicago_permit_data)
-	// var yScale1 = d3.scale.linear()
-	// 			.domain([0, Math.max.apply(Math, westloop_total_crime)])
-	// 			.range([graphHeight, 0]);
-	// var yScale2 = d3.scale.linear()
-	// 			.domain([0, Math.max.apply(Math, westloop_permits)])
-	// 			.range([graphHeight, 0]);
-
-	// var color = d3.scale.category10();
-	// // Define the line
-	// var line1 = d3.svg.line()
-	//     .x(function(d) { return xScale(d.year); })
-	//     .y(function(d) { return yScale1(d.value); });
-	// var line2 = d3.svg.line()
-	//     .x(function(d) { return xScale(d.year); })
-	//     .y(function(d) { return yScale2(d.value2); });
-
- //    canvas.append("path")
- //        .attr("class", "line")
- //        .style("stroke", "blue")
- //        .attr("d", line1(data)); 
- //    canvas.append("path")
- //        .attr("class", "line")
- //        .style("stroke", "red")
- //        .attr("d", line2(data)); 
-
- //    // Define the axes
-	// var xAxis = d3.svg.axis().scale(xScale)
-	//     .orient("bottom").ticks(years.length)
-	//     .tickFormat(function(d, i){
-	// 	    return d;
-	// 	});
-	// var yAxis = d3.svg.axis().scale(yScale1)
-	//     .orient("left").ticks(5);
- //    // Add the X Axis
- //    canvas.append("g")
- //        .attr("class", "x axis")
- //        .attr("transform", "translate(0," + graphHeight + ")")
- //        .call(xAxis);
- //    // Add the Y Axis
- //    canvas.append("g")
- //        .attr("class", "y axis")
- //        .call(yAxis);
-
-
-// multiple series:
-// 	var dataNest = d3.nest()
-//         .key(function(d) {return d.symbol;})
-//         .entries(data);
-
-//     // Loop through each symbol / key
-//     dataNest.forEach(function(d) {
-// 	    canvas.append("path")
-// 	        .attr("class", "line")
-// 	        .style("stroke", function() {
-// 	            return d.color = color(d.key); })
-// 	        .attr("d", line1(d.values)); 
-//     });
