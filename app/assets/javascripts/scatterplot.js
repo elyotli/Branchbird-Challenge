@@ -6,7 +6,7 @@ $(document).ready(function(){
 	paddingTop = 10,
 	paddingBottom = 50,
 	paddingLeft = 70,
-	paddingRight = 20,
+	paddingRight = 200,
 	graphHeight = canvasHeight - paddingTop - paddingBottom, //this is the dimension of bargraph;
 	graphWidth = canvasWidth - paddingLeft - paddingRight;
 
@@ -27,6 +27,7 @@ $(document).ready(function(){
 	        	.domain([years[0], years[years.length - 1]])
 				.range([0, graphWidth]);
 
+	//setup graph 1 -----------------------------------------
 	canvas1 = d3.select(".graph1")
 			.append("svg")
 			.attr("height", canvasHeight)
@@ -50,6 +51,7 @@ $(document).ready(function(){
 	updateGraph(canvas1, westloop_crime_data)
 	updateGraph(canvas1, westloop_permit_data)
 
+	//setup graph 2 -----------------------------------------
 	canvas2 = d3.select(".graph2")
 			.append("svg")
 			.attr("height", canvasHeight)
@@ -73,6 +75,7 @@ $(document).ready(function(){
 	updateGraph(canvas2, chicago_crime_data)
 	updateGraph(canvas2, chicago_permit_data)
 
+	//setup graph 3 -----------------------------------------
 	canvas3 = d3.select(".graph3")
 			.append("svg")
 			.attr("height", canvasHeight)
@@ -102,14 +105,9 @@ function updateGraph(canvas, data){
 
 	var color = d3.scale.category10();
 	// Define the line
-	var line1 = d3.svg.line()
+	var line = d3.svg.line()
 	    .x(function(d) { return xScale(d.year); })
 	    .y(function(d) { return yScale(d.value); });
-
-    canvas.append("path")
-        .attr("class", "line")
-        .style("stroke", "blue")
-        .attr("d", line1(data)); 
 
     // Define the axes
 	var xAxis = d3.svg.axis().scale(xScale)
@@ -128,9 +126,38 @@ function updateGraph(canvas, data){
     // Add the Y Axis
     var $canvas = $(canvas[0]);
     if($canvas.find(".y-axis").length == 0){
+    	var yAxis = d3.svg.axis().scale(yScale)
+	    	.orient("left").ticks(5);
+    	canvas.append("path")
+	        .attr("class", "line")
+	        .style("stroke", "blue")
+	        .attr("d", line(data));
 	    canvas.append("g")
 	        .attr("class", "y-axis")
 	        .call(yAxis);
+	    canvas.append("text")
+	            .attr("x", graphWidth + 60)
+	            .attr("y", $canvas.find(".y-axis").length * 30 + 30) 
+	            .attr("class", "legend")    // style the legend
+	            .style("fill", "blue")
+	            .text("crime count");
+	} else{
+		var yAxis = d3.svg.axis().scale(yScale)
+	    	.orient("right").ticks(5);
+		canvas.append("path")
+	        .attr("class", "line")
+	        .style("stroke", "red")
+	        .attr("d", line(data));
+	    canvas.append("g")
+	        .attr("class", "y-axis")
+	        .attr("transform", "translate("+graphWidth+", 0)")
+	        .call(yAxis);
+	    canvas.append("text")
+	            .attr("x", graphWidth + 60)
+	            .attr("y", $canvas.find(".y-axis").length * 30 + 30) 
+	            .attr("class", "legend")    // style the legend
+	            .style("fill", "red")
+	            .text("new construction");
 	}
 }
 
@@ -181,15 +208,26 @@ function updateDistributionGraph(canvas, data){
 	var yAxis = d3.svg.axis().scale(yScale)
 	    .orient("left").ticks(5);
 
-    canvas3.append("g")
+    canvas.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + graphHeight + ")")
         .call(xAxis);
     // Add the Y Axis
-    var $canvas = $(canvas3[0]);
+    var $canvas = $(canvas[0]);
     if($canvas.find(".y-axis").length == 0){
-	    canvas3.append("g")
+	    canvas.append("g")
 	        .attr("class", "y-axis")
 	        .call(yAxis);
 	}
+
+	legendSpace = graphWidth/dataNest.length;
+	dataNest.forEach(function(d,i) {
+		canvas.append("text")
+	            .attr("x", graphWidth + 10)
+	            .attr("y", 20*i+5) 
+	            .attr("class", "legend")    // style the legend
+	            .style("fill", function() { // dynamic colours
+	                return d.color = color(d.key); })
+	            .text(d.key);
+	});
 }

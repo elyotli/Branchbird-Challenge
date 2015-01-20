@@ -27,40 +27,43 @@ html, body{
 .graph1{
 	margin-left: auto;
 	margin-right: auto;
-	width:70%
+	width:70%;
+	background-color: rgba(128, 190, 157, 0.17);
 }
 
 .graph1 .line {
 	fill: none;
 	stroke: #000;
 	shape-rendering: crispEdges;
-	stroke-width: 2;
+	stroke-width: 3;
 }
 
 .graph2{
 	margin-left: auto;
 	margin-right: auto;
-	width:70%
+	width:70%;
+	background-color: rgba(128, 190, 157, 0.17);
 }
 
 .graph2 .line {
 	fill: none;
 	stroke: #000;
 	shape-rendering: crispEdges;
-	stroke-width: 2;
+	stroke-width: 3;
 }
 
 .graph3{
 	margin-left: auto;
 	margin-right: auto;
-	width:70%
+	width:70%;
+	background-color: rgba(128, 190, 157, 0.17);
 }
 
 .graph3 .line {
 	fill: none;
 	stroke: #000;
 	shape-rendering: crispEdges;
-	stroke-width: 2;
+	stroke-width: 3;
 }
 
 .buttons{
@@ -72,4 +75,9 @@ html, body{
 .buttons * {
 	margin-left: 18%;
 
+}
+
+.graph1 .graph2 .graph3{
+	
+	background-color: blue;
 }
